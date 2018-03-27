@@ -1,6 +1,7 @@
 import React, { Component, Link } from 'react';
 import Profile from './Profile.jsx';
 import Signin from './Signin.jsx';
+import Drivertester from './Drivertester.jsx';
 import {
   isSignInPending,
   isUserSignedIn,
@@ -34,6 +35,8 @@ export default class App extends Component {
             <Signin handleSignIn={ this.handleSignIn } />
             : <Profile handleSignOut={ this.handleSignOut } />
           }
+          {/* <Drivertester /> */}
+          <Drivertester />
         </div>
       </div>
     );
