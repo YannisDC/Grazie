@@ -1,7 +1,7 @@
 import React, { Component, Link } from 'react';
 import Profile from './Profile.jsx';
 import Signin from './Signin.jsx';
-import Drivertester from './Drivertester.jsx';
+import Navbar from './Navbar.jsx';
 import {
   isSignInPending,
   isUserSignedIn,
@@ -30,13 +30,12 @@ export default class App extends Component {
   render() {
     return (
       <div className="site-wrapper">
+        <Navbar handleSignIn={ this.handleSignIn } handleSignOut={ this.handleSignOut }/>
         <div className="site-wrapper-inner">
           { !isUserSignedIn() ?
             <Signin handleSignIn={ this.handleSignIn } />
-            : <Profile handleSignOut={ this.handleSignOut } />
+            : <Profile />
           }
-          {/* <Drivertester /> */}
-          <Drivertester />
         </div>
       </div>
     );

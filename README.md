@@ -6,7 +6,9 @@ The name Grazie comes from the Italian "grazie mille" meaning "thanks a million"
 
 ## TODO
 - [x] Add multifile collection drivers
+- [ ] Add single file driver
 - [ ] Add basic profile
+- [ ] Test drivers for multi-player storage
 - [ ] Add coinbase "Subscribe with bitcoin"
 - [ ] Decide on a way to post content (embed from content provider networks or store on gaia)
 - [ ] Tip per post
