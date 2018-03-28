@@ -3,6 +3,7 @@ import {
   isSignInPending,
   loadUserData,
   Person,
+  lookupProfile,
 } from 'blockstack';
 import Drivertester from './Drivertester.jsx';
 
@@ -21,7 +22,12 @@ export default class Profile extends Component {
   	  	  return avatarFallbackImage;
   	  	},
   	  },
+      username: ""
   	};
+  }
+
+  isLocal() {
+    return this.props.match.params.username ? false : true
   }
 
   render() {
@@ -34,7 +40,7 @@ export default class Profile extends Component {
         </div>
         <h1>Hello, <span id="heading-name">{ person.name() ? person.name() : 'Nameless Person' }</span>!</h1>
         <p className="lead">
-          
+
         </p>
         <Drivertester />
       </div> : null
@@ -42,8 +48,25 @@ export default class Profile extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      person: new Person(loadUserData().profile),
-    });
+    if (this.isLocal()) {
+      this.setState({
+        person: new Person(loadUserData().profile),
+        username: loadUserData().username
+      });
+    } else {
+      const username = this.props.match.params.username
+
+      lookupProfile(username)
+        .then((profile) => {
+          this.setState({
+            person: new Person(profile),
+            username: username
+          })
+        })
+        .catch((error) => {
+          console.log('could not resolve profile')
+        })
+    }
+
   }
 }

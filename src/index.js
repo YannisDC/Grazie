@@ -7,4 +7,10 @@ import App from './components/App.jsx';
 import bootstrap from 'bootstrap/dist/css/bootstrap.css';
 import style from './styles/style.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { BrowserRouter } from 'react-router-dom';
+
+ReactDOM.render((
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+  ), document.getElementById('root'));

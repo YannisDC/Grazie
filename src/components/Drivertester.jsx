@@ -1,9 +1,10 @@
 import React, { Component, Link } from 'react';
 
-import createLocalStorageDriver from "../services/drivers/localStorageDriver";
-// import createLocalStorageDriver from "../services/drivers/blockstackDriver";
+// import createLocalStorageDriver from "../services/drivers/localStorageDriver";
+import createLocalStorageDriver from "../services/drivers/blockstackDriver";
 import MultiFileCollectionService from "../services/MultiFileCollectionService";
 import SingleFileCollectionService from "../services/SingleFileCollectionService";
+import SingleFileService from "../services/SingleFileService";
 
 const storage = createLocalStorageDriver();
 
@@ -17,16 +18,44 @@ const singleFile = new SingleFileCollectionService({
   storage
 });
 
+const profile = new SingleFileService({
+  type: "profile",
+  storage
+});
+
 export default class Drivertester extends Component {
   constructor(props) {
     super(props);
+    this.addProfile = this.addProfile.bind(this);
+    this.deleteProfile = this.deleteProfile.bind(this);
     this.addItemSingle = this.addItemSingle.bind(this);
     this.addItemMulti = this.addItemMulti.bind(this);
     this.state = {
       singleFileItems: [],
-      multiFileItems: []
+      multiFileItems: [],
+      profile: {
+        title: ""
+      }
     };
   }
+
+  async addProfile() {
+    const newProfile = this.state.profile
+    const response = await profile.putItem( newProfile );
+    const item = await profile.getItem();
+    this.setState({
+      profile: item
+    });
+  };
+
+  async deleteProfile() {
+    const response = await profile.deleteItem();
+    this.setState({
+      profile: {
+        title: ""
+      }
+    });
+  };
 
   async addItemSingle() {
     const response = await singleFile.createItem({
@@ -103,7 +132,7 @@ export default class Drivertester extends Component {
           </p>
         </div>
         <div style={{ display: "flex" }}>
-          <div style={{ padding: "20px", flex: "0 0 50%" }}>
+          <div style={{ padding: "20px", flex: "0 0 33%" }}>
             <h4>Multi File Collection</h4>
             <button onClick={this.addItemMulti}>Add MultiFile Item</button>
             <ul>
@@ -120,7 +149,7 @@ export default class Drivertester extends Component {
               ))}
             </ul>
           </div>
-          <div style={{ padding: "20px", flex: "0 0 50%" }}>
+          <div style={{ padding: "20px", flex: "0 0 33%" }}>
             <h4>Single File Collection</h4>
             <button onClick={this.addItemSingle}>Add SingleFile Item</button>
             <ul>
@@ -137,6 +166,19 @@ export default class Drivertester extends Component {
               ))}
             </ul>
           </div>
+          <div style={{ padding: "20px", flex: "0 0 33%" }}>
+            <h4>Single File</h4>
+            <button onClick={this.addProfile}>Add Profile</button>
+            <p>
+              {this.state.profile.title}
+              <button onClick={() => this.addProfile()}>
+                Edit
+              </button>
+              <button onClick={() => this.deleteProfile()}>
+                Delete
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -145,11 +187,19 @@ export default class Drivertester extends Component {
   async componentDidMount() {
     const multiFileItems = await multiFile.getItems();
     const singleFileItems = await singleFile.getItem();
+    const profileItem = await profile.getItem();
     this.setState({
       multiFileItems,
       singleFileItems: Object.keys(singleFileItems).map(
         key => singleFileItems[key]
       )
     });
+    if (Object.keys(profileItem).length === 0 && profileItem.constructor === Object) {
+      //do nothing
+    } else {
+      this.setState({
+        profile: profileItem
+      });
+    }
   }
 }
