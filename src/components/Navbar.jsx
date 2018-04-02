@@ -25,6 +25,8 @@ export default class Navbar extends Component {
 
             <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul className="nav navbar-nav navbar-right">
+                <li className="link-text">Profile</li>
+                <li className="link-text">Username</li>
                 <li>
                 { !isUserSignedIn() ?
                   <button

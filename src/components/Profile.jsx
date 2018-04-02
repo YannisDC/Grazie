@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import Settings from './Settings.jsx';
 import {
   isSignInPending,
   loadUserData,
   Person,
   lookupProfile,
 } from 'blockstack';
-import Drivertester from './Drivertester.jsx';
+
+
 
 const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
 
@@ -21,10 +23,11 @@ export default class Profile extends Component {
   	  	avatarUrl() {
   	  	  return avatarFallbackImage;
   	  	},
-  	  },
-      username: ""
+  	  }
   	};
   }
+
+
 
   isLocal() {
     return this.props.match.params.username ? false : true
@@ -34,15 +37,12 @@ export default class Profile extends Component {
     const { person } = this.state;
     return (
       !isSignInPending() ?
-      <div className="panel-welcome" id="section-2">
-        <div className="avatar-section">
-          <img src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage } className="img-circle avatar" id="avatar-image" />
-        </div>
-        <h1>Hello, <span id="heading-name">{ person.name() ? person.name() : 'Nameless Person' }</span>!</h1>
-        <p className="lead">
-
-        </p>
-        <Drivertester />
+      <div>
+        <Settings
+          avatarUrl={person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage}
+          name={person.name() ? person.name() : 'Nameless Person'}
+          username={this.state.username}
+          />
       </div> : null
     );
   }
@@ -67,6 +67,5 @@ export default class Profile extends Component {
           console.log('could not resolve profile')
         })
     }
-
   }
 }

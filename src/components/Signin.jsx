@@ -10,8 +10,11 @@ export default class Signin extends Component {
     const { handleSignIn } = this.props;
 
     return (
+      <div className="sections">
         <div className="panel-landing" id="section-1">
-          <h1 className="landing-heading">Grazie mille!</h1>
+          <h1>Grazie</h1>
+          <h3>The decentralized artist support platform</h3>
+          <br/>
           <p className="lead">
             <button
               className="btn btn-primary btn-lg"
@@ -22,6 +25,9 @@ export default class Signin extends Component {
             </button>
           </p>
         </div>
+        <div className="panel-landing" id="section-2">
+        </div>
+      </div>
     );
   }
 }

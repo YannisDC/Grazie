@@ -1,7 +1,7 @@
 import React, { Component, Link } from 'react';
 
-// import createLocalStorageDriver from "../services/drivers/localStorageDriver";
-import createLocalStorageDriver from "../services/drivers/blockstackDriver";
+import createLocalStorageDriver from "../services/drivers/localStorageDriver";
+// import createLocalStorageDriver from "../services/drivers/blockstackDriver";
 import MultiFileCollectionService from "../services/MultiFileCollectionService";
 import SingleFileCollectionService from "../services/SingleFileCollectionService";
 import SingleFileService from "../services/SingleFileService";
